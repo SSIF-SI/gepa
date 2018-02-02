@@ -12,6 +12,8 @@ class Personale {
 	
 	const CODICE_FISCALE = "codiceFiscale";
 	
+	const NUM_BADGE = "numBadge";
+	
 	const PERSONE = "persone";
 	
 	const PERSONALE = "personale";

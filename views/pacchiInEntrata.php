@@ -99,6 +99,7 @@ select, input{
 	border:5px solid #007998;
 	border-radius: 20px 0 20px 0;
 	padding:0;
+	margin-bottom:0.6em;
 }
 
 .destinatario h1{
@@ -172,10 +173,10 @@ $(document).ready(function(){
 
 					if(destinatario && corriere){
 						if($("#"+destinatario).length == 0){
-							$("#pacchi").append('<section class="col-sm-4 col-lg-2 col-xl-1"><div class="destinatario" id="'+destinatario+'"><input type="hidden" name="destinatario[]" value="'+destinatario+'" /><h1>'+destinatarioText+'</h1><ul></ul></div></section>');
+							$("#pacchi").append('<section class="col-sm-4 col-lg-2 col-xl-1"><div class="destinatario" id="'+destinatario+'"><h1>'+destinatarioText+'</h1><ul></ul></div></section>');
 						}
 						
-						inputData = "<input type='hidden' name='codice["+destinatario+"][]' value=\""+codice.replace('"',"&quot;")+"\" />";
+						inputData = "<input type='hidden' name='codiceEsterno["+destinatario+"][]' value=\""+codice.replace('"',"&quot;")+"\" />";
 						inputData += "<input type='hidden' name='corriere["+destinatario+"][]' value='"+corriere+"'/>";
 						inputData += "<input type='hidden' name='privato["+destinatario+"][]' value='"+tipoPacco+"'/>";
 						
@@ -188,14 +189,38 @@ $(document).ready(function(){
 			}
 
 	});
+
+	$("#codice").on("blur",function(){$("#codice").val("")});
 	
 	$("#save").click(function(e){
 		if($("#pacchi section").length == 0){
 			alert("Nessun pacco sparato.");
 			return;
 		}
-		alert("OK!!");
-		
+		$("#pacchiForm").submit();
+	});
+
+	$("#pacchiForm").submit(function(e) {
+
+	    var url = "?action=save"; // the script where you handle the form input.
+
+	    $.ajax({
+	           type: "POST",
+	           url: url,
+	           data: $("#pacchiForm").serialize(), // serializes the form's elements.
+			   dataType: "json",
+	           success: function(data)
+	           {
+	               if(!data.errors){
+		               alert("Dati salvati con successo!");
+		               $("#pacchi").html("");
+	               } else {
+		               alert("Errore durante il salvataggio.\n\n"+data.errors);
+	               }
+	           }
+	         });
+
+	    e.preventDefault(); // avoid to execute the actual submit of the form.
 	});
 });
 

@@ -20,8 +20,6 @@ class Registro extends Crud {
 	
 	protected $TABLE = "registro";
 	
-	protected $VIEW = "registro_view";
-
 	public function __construct($connInstance) {
 		parent::__construct ( $connInstance );
 		$this->useView(false);

@@ -33,12 +33,12 @@ define ( "FILES_HTTP_PATH", HTTP_ROOT . "files/" );
 
 define ( "TEMPLATES_PATH", REAL_ROOT . "templates/" );
 
-define ( "MAIL_FROM", "" );
+define ( "MAIL_FROM", "Gestione Pacchi <web-gestione-pacchi@isti.cnr.it>" );
 
 define ( "HOST", "localhost" );
 define ( "DB_ENGINE", "mysql" );
-define ( "ROOT_USER", "root" );
-define ( "ROOT_PASSWORD", "jonFED_311" );
+define ( "ROOT_USER", "pacchi" );
+define ( "ROOT_PASSWORD", "!_p4cch1_!" );
 define ( "ROOT_DATABASE", "gestione_pacchi" );
 
 define ( "PAGE_TITLE_PREFIX", "Gestione Pacchi [TEST]" );
