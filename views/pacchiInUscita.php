@@ -41,28 +41,26 @@ select, input{
 
 .action-button
 {
-	position: relative;
-	padding: 10px;
- 	border-radius: 10px;
+	border-radius: 0.6em;
 	color: #FFF;
 	text-decoration: none;	
 	cursor:pointer;
+	padding:0.3em;
+	margin:-0.6em 0;
 }
 
 .blue
 {
 	border:none;
 	background-color: #00a1cb;
-	text-shadow: 0px 2px #2980B9;
+	text-shadow: 0px 2px #004;
 }
 
 .green
 {
 	border:none;
 	background-color: #080;
-	text-shadow: 0px 2px #400;
-	padding:0.2em !important;
-	position:relative;
+	text-shadow: 0px 2px #040;
 	top:0;
 }
 
@@ -71,9 +69,6 @@ select, input{
 	border:none;
 	background-color: #800;
 	text-shadow: 0px 2px #400;
-	padding:0.2em !important;
-	position:relative;
-	top:0;
 }
 
 
@@ -132,9 +127,14 @@ select, input{
 	cursor: pointer;
 }
 
-h2 button{
-	font-size:0.6em;
-	padding:1em;
+#actions{
+	font-size:1.5em;
+	margin:0.6em 0;
+}
+
+
+#dispatch{
+	display:none;
 }
 
 section{box-sizing: border-box;}
@@ -142,7 +142,8 @@ section{box-sizing: border-box;}
 </head>
 <body>
 <h1>Pacchi in Uscita</h1>
-<h2>Pacchi selezionati: <span id="countPacchi">0</span>&nbsp;<span><button id="dispatch" class="action-button shadow animate blue">Consegna</button></span><span id="action"></span></h2>
+<h2>Pacchi selezionati: <span id="countPacchi">0</span></h2>
+<div id="actions">Azioni: <button id="dispatch" class="action-button shadow animate blue">Consegna</button></span><span id="action"></span></div>
 <form id="pacchiForm" method="POST">
 <div id="pacchi" class="row fix">
 <?php foreach($pacchiInUscita as $idDestinatario => $pacchi):?>
@@ -151,7 +152,7 @@ section{box-sizing: border-box;}
 		<h1><?=Personale::getInstance()->getNominativo($idDestinatario)?></h1>
 		<ul>
 		<?php foreach ($pacchi as $pacco):?>
-			<li id="<?=$pacco[Registro::CODICE_ESTERNO]?>">
+			<li id="<?=preg_replace('/[^a-z0-9]/i', "", $pacco[Registro::CODICE_ESTERNO]);?>">
 				<input name="id[]" value="<?=$pacco[Registro::ID_PACCO]?>" type="hidden">
 				<div style="line-height:2em">
 					<em>Codice: </em><strong><?=$pacco[Registro::CODICE_ESTERNO]?></strong><br>
@@ -166,7 +167,6 @@ section{box-sizing: border-box;}
 <?php endforeach;?>
 </div>
 <input type="text" id="codice" value="" />
-<input type="text" id="numBadge" value="" />
 </form>
 <script>
 $(document).ready(function(){
@@ -203,20 +203,58 @@ $(document).ready(function(){
 
 		$('#dispatch').hide();
 		
-		$("#action").html(" - Passare il badge... <i class='fa fa-sync fa-spin'></i> &nbsp;<button id='cancel' class='action-button shadow animate red'>Annulla</button>");
-		numBadge = $("#numBadge");
-		numBadge.val("");
-		numBadge.focus();
-
+		$("#action").html("Passare il badge... <i class='fa fa-sync fa-spin'></i> &nbsp;<button class='action-button cancel shadow animate red'>Annulla</button>");
 		refreshButtons();
-		
-		numBadge.keydown(function(event) {
+		$("#codice").focus();
+	});
 
-			if(event.keyCode == 13){
-				event.preventDefault();
+	function refreshCountPacchi(){
+		var pacchiDaConsegnare = $("li.selected").length;
+		$("#countPacchi").html(pacchiDaConsegnare);
+		pacchiDaConsegnare > 0 ? $("#dispatch").show() : $("#dispatch").hide();
+	}	
+
+	function refreshButtons(){
+		$(".cancel").click(function(e){
+			$('#dispatch').show();
+			$("#action").html("");
+			Const.waitingForBadge = false;
+			$("#codice").focus();
+		});
+
+		$(".confirm").click(function(e){
+			var ids = [];
+			$(".selected input").each(function(i){
+				ids.push($(this).val());
+			})
+			$.ajax({
+		           type: "POST",
+		           url: "?action=dispatch",
+		           data: {ricevente: $("#ricevente").val(), ids: ids}, // serializes the form's elements.
+				   dataType: "json",
+		           success: function(data)
+		           {
+		        	   if(!data.errors){
+			               alert("Dati salvati con successo!");
+			               $("#pacchiInUscita").click();
+		               } else {
+			               alert("Errore durante il salvataggio.\n\n"+data.errors);
+		               }
+		           },		          
+		           error: function(){ alert("Errore di connessione!")}
+		         });
+	        
+		})
+	}
+	
+	$("#codice").keydown(function(e){
+		if(e.keyCode == 13){
+			e.preventDefault();
+			
+			if(Const.waitingForBadge){
 				var badge = $(this).val().substring(4,10);
-				$(this).val("");
 				if(badge.length != 6) return;
+
 				$.ajax({
 			           type: "POST",
 			           url: "?action=getUser",
@@ -230,53 +268,27 @@ $(document).ready(function(){
 								return;
 							}
 
-							$("#action").html(" - Consegna a "+data.nome+" "+data.cognome+" <button id='confirm' class='action-button shadow animate green'>Conferma</button>&nbsp;<button id='cancel' class='action-button shadow animate red'>Annulla</button>");
+							$("#action").html("Consegna a <strong><em>"+data.nome+" "+data.cognome+"</em></strong> <button class='action-button confirm shadow animate green'>Conferma</button>&nbsp;<button class='action-button cancel shadow animate red'>Annulla</button><input type='hidden' id='ricevente' value='"+data.idPersona+"'/>");
 							$("#numBadge").blur();
+							refreshButtons();
 			           },
 			           error: function(){ alert("Errore di connessione!")}
 			         });
+				
+			} else {
+				var codice = $(this).val();
+				var idCodice = codice.replace(/[^a-z0-9]/gi, '');
+				console.log(idCodice);
+				$("li#"+idCodice).addClass("selected");
+				refreshCountPacchi();
 			}
-		});
 
-	});
-
-	function refreshCountPacchi(){
-		var pacchiDaConsegnare = $("li.selected").length;
-		$("#countPacchi").html(pacchiDaConsegnare);
-		pacchiDaConsegnare > 0 ? $("#dispatch").show() : $("#dispatch").hide();
-	}	
-
-	function refreshButtons(){
-		$("#cancel").click(function(e){
-			$('#dispatch').show();
-			$("#action").html("");
-			Const.waitingForBadge = false;
-		});
-	}
-	$(document).keydown(function (e) {
-		if(!Const.waitingForBadge) $("#codice").focus();
-		e = e || window.event;//Get event
-	    if (e.ctrlKey) {
-	        var c = e.which || e.keyCode;//Get key code
-	        switch (c) {
-		        case 74://Block Ctrl+J
-		            e.preventDefault();     
-	                e.stopPropagation();
-	                break;
-	        }
-	    }
-	});
-
-	$("#codice").keydown(function(e){
-		if(e.keyCode == 13){
-			e.preventDefault();
-			var codice = $(this).val();
-			var idCodice = codice.replace(/[\+#,\.\?]/g,"");
 			$(this).val("");
-			$("li#"+idCodice).addClass("selected");
-			refreshCountPacchi();
+			
 		}
 	});
+
+	$("li").removeClass("selected");
 
 	$("#codice").focus();
 });

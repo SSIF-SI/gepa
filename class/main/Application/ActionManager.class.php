@@ -58,5 +58,45 @@ class ActionManager {
 		$ARP = new AjaxResultParser();
 		$ARP->encode($persona);
 	}
+	
+	function dispatch(){
+		
+		$ARP = new AjaxResultParser();
+		$eh = new ErrorHandler(false);
+		
+		$ids = $_POST['ids'];
+		$ricevente = $_POST['ricevente'];
+		$registro = new Registro($this->_dbConnector);
+		$nominativo = Personale::getInstance()->getNominativo($ricevente);
+
+		$registro->updatePack($ids, $ricevente);
+		$errors = $this->_dbConnector->getLastError();
+		if($errors){
+			$eh->setErrors("Impossibile salvare i dati: ".$errors);
+		} else {
+
+			$nPacchi = count($ids);
+			$vowel = $nPacchi == 1 ? "o" : "hi";
+			$sent = PHPMailer::sendMail(MAIL_FROM, "", "[TEST]", "$nominativo hai ritirato {$nPacchi} pacc{$vowel} dal magazzino.");
+			if(!$sent){
+				$eh->setErrors("Impossibile inviare alcune mail di notifica");
+			}
+			$listOfPack = $registro->getBy(Registro::ID_PACCO, $ids);
+			$listOfPack = Utils::groupListBy($listOfPack, Registro::DESTINATARIO);
+			foreach($listOfPack as $idPersona=>$list){
+				if($idPersona == $ricevente) continue;
+				$nPacchi = count($list);
+				$vowel = $nPacchi == 1 ? "o" : "hi";
+				$vowelD = $nPacchi == 1 ? "o" : "i";
+				$sent = PHPMailer::sendMail(MAIL_FROM, "", "[TEST]", "$nominativo ha ritirato {$nPacchi} pacc{$vowel} destinat{$vowelD} a te dal magazzino.");
+				if(!$sent){
+					$eh->setErrors("Impossibile inviare alcune mail di notifica");
+				}
+			}
+		}
+		
+		$ARP->encode($eh->getErrors(true));
+
+	}
 }
 ?>

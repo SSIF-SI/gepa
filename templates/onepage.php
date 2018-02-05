@@ -18,7 +18,7 @@
 <nav id="leftnav">
 	<ul>
 		<li>
-			<a href="#pacchiInEntrata" title="Pacchi in Entrata">
+			<a id="pacchiInEntrata" href="#pacchiInEntrata" title="Pacchi in Entrata">
 				<div class="f1_container">
 					<div class="f1_card">
 					  <div class="front face">
@@ -32,7 +32,7 @@
 			</a>
 		</li>
 		<li>
-			<a href="#pacchiInUscita" title="Pacchi in uscita">
+			<a id="pacchiInUscita" href="#pacchiInUscita" title="Pacchi in uscita">
 				<div class="f1_container">
 					<div class="f1_card">
 					  <div class="front face">

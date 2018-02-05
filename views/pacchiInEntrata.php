@@ -160,7 +160,7 @@ $(document).ready(function(){
 			if(event.keyCode == 13){
 				event.preventDefault();
 				var codice = $("#codice").val();
-				var idCodice = codice.replace(/[\+#,\.\?]/g,"");
+				var idCodice = codice.replace(/[^a-z0-9]/gi, '');
 				if($("#"+idCodice).length == 0){
 
 					var destinatario = $("#destinatario").val();

@@ -20,9 +20,17 @@ class Registro extends Crud {
 	
 	protected $TABLE = "registro";
 	
+	private $SQL_UPDATE_MULTIPLE_PACKS = "UPDATE %s SET %s = %d, %s = '%s' WHERE %s IN (%s)";
+	
 	public function __construct($connInstance) {
 		parent::__construct ( $connInstance );
 		$this->useView(false);
+	}
+	
+	public function updatePack($ids, $ricevente){
+		$dataConsegna = date("Y-m-d H:i:s");
+		$sql = sprintf($this->SQL_UPDATE_MULTIPLE_PACKS, $this->TABLE, self::RICEVENTE, $ricevente, self::DATA_CONSEGNA, $dataConsegna, self::ID_PACCO, join(", ",$ids));
+		$this->_connInstance->query($sql);
 	}
 }
 
