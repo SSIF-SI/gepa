@@ -153,13 +153,14 @@ section{box-sizing: border-box;}
 </form>
 <script>
 $(document).ready(function(){
+	$("#codice").focus();
 	$("#codice").val("");
 	$( document ).keydown(function(event) {
 			$("#codice").focus();
 			if(event.keyCode == 13){
 				event.preventDefault();
 				var codice = $("#codice").val();
-				var idCodice = codice.replace(/[+#,.]/,"");
+				var idCodice = codice.replace(/[\+#,\.\?]/g,"");
 				if($("#"+idCodice).length == 0){
 
 					var destinatario = $("#destinatario").val();

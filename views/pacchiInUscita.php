@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Test</title>
 <style>
-#codice{
+#codice, #numBadge{
 	display:block;
 	position:absolute;
 	left:-99999px;
@@ -166,6 +166,7 @@ section{box-sizing: border-box;}
 <?php endforeach;?>
 </div>
 <input type="text" id="codice" value="" />
+<input type="text" id="numBadge" value="" />
 </form>
 <script>
 $(document).ready(function(){
@@ -203,7 +204,7 @@ $(document).ready(function(){
 		$('#dispatch').hide();
 		
 		$("#action").html(" - Passare il badge... <i class='fa fa-sync fa-spin'></i> &nbsp;<button id='cancel' class='action-button shadow animate red'>Annulla</button>");
-		numBadge = $("#codice");
+		numBadge = $("#numBadge");
 		numBadge.val("");
 		numBadge.focus();
 
@@ -230,7 +231,7 @@ $(document).ready(function(){
 							}
 
 							$("#action").html(" - Consegna a "+data.nome+" "+data.cognome+" <button id='confirm' class='action-button shadow animate green'>Conferma</button>&nbsp;<button id='cancel' class='action-button shadow animate red'>Annulla</button>");
-							
+							$("#numBadge").blur();
 			           },
 			           error: function(){ alert("Errore di connessione!")}
 			         });
@@ -252,20 +253,32 @@ $(document).ready(function(){
 			Const.waitingForBadge = false;
 		});
 	}
-	$(document).bind('keydown',function (e) {
-		$('#codice').focus();
-	    e = e || window.event;//Get event
+	$(document).keydown(function (e) {
+		if(!Const.waitingForBadge) $("#codice").focus();
+		e = e || window.event;//Get event
 	    if (e.ctrlKey) {
 	        var c = e.which || e.keyCode;//Get key code
 	        switch (c) {
 		        case 74://Block Ctrl+J
 		            e.preventDefault();     
 	                e.stopPropagation();
-	            break;
+	                break;
 	        }
 	    }
 	});
-	
+
+	$("#codice").keydown(function(e){
+		if(e.keyCode == 13){
+			e.preventDefault();
+			var codice = $(this).val();
+			var idCodice = codice.replace(/[\+#,\.\?]/g,"");
+			$(this).val("");
+			$("li#"+idCodice).addClass("selected");
+			refreshCountPacchi();
+		}
+	});
+
+	$("#codice").focus();
 });
 </script>
 </body>
