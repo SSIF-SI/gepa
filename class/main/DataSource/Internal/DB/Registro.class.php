@@ -20,6 +20,8 @@ class Registro extends Crud {
 	
 	protected $TABLE = "registro";
 	
+	protected $VIEW = "registro_view";
+	
 	private $SQL_UPDATE_MULTIPLE_PACKS = "UPDATE %s SET %s = %d, %s = '%s' WHERE %s IN (%s)";
 	
 	public function __construct($connInstance) {

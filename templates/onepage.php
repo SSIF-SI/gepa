@@ -45,6 +45,20 @@
 				</div>
 			</a>
 		</li>
+		<li>
+			<a id="registro" href="#registro" title="Registro">
+				<div class="f1_container">
+					<div class="f1_card">
+					  <div class="front face">
+							<div class="registro circleBase type1 front"></div>
+					  </div>
+					  <div class="back face center">
+							<div class="registro circleBase type1 back"></div>
+					  </div>
+					</div>
+				</div>
+			</a>
+		</li>
 	</ul>
 </nav>
 <section id="main">

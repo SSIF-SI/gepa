@@ -160,6 +160,14 @@ background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #00b5e5), 
     background-position:center center;
 }
 
+.type1.front.registro,
+.type1.back.registro
+{
+	background-image: url('images/registro.png');
+	background-repeat:no-repeat;
+    background-position:center center;
+}
+
 .active{
 	background-color:gold !important;
 	border-color:#800 !important;
