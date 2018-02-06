@@ -165,7 +165,15 @@ background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #00b5e5), 
 {
 	background-image: url('images/registro.png');
 	background-repeat:no-repeat;
-    background-position:center center;
+    background-position:45% center;
+}
+
+.type1.front.corrieri,
+.type1.back.corrieri
+{
+	background-image: url('images/corrieri.png');
+	background-repeat:no-repeat;
+    background-position:center 40%;
 }
 
 .active{

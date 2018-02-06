@@ -27,43 +27,11 @@ select, label,input{
 
 select, input{
 	border:1px solid #000;
+	background-color:#fff;
 	border-radius: 6px;
 	padding:0.2em;
 	margin-right:1em;
 	font-weight:normal;
-}
-
-.animate
-{
-	transition: all 0.1s;
-	-webkit-transition: all 0.1s;
-}
-
-.action-button
-{
-	position: relative;
-	padding: 10px;
- 	border-radius: 10px;
-	color: #FFF;
-	text-decoration: none;	
-	cursor:pointer;
-}
-
-.blue
-{
-	border:none;
-	background-color: #00a1cb;
-	text-shadow: 0px 2px #2980B9;
-}
-
-.red
-{
-	border:none;
-	background-color: #800;
-	text-shadow: 0px 2px #400;
-	padding:0.2em !important;
-	position:relative;
-	top:0;
 }
 
 #pacchi{
@@ -146,8 +114,7 @@ section{box-sizing: border-box;}
 	</select>
 
 	<input type="text" id="codice" value="" />
-	<input id="save" type="button" value="Salva" class="action-button shadow animate blue"/>
-
+	<button id="save" class="btn btn-primary"><i class="fa fa-save"> </i> Salva</button>
 <div id="pacchi" class="row fix">
 </div>
 </form>
@@ -184,7 +151,14 @@ $(document).ready(function(){
 						var li = "<li id='"+idCodice+"'>"+inputData+"<div style='line-height:2em'><em>Codice: </em><strong>"+codice+"</strong><br/><em>Corriere:</em> <strong>"+corriereText+"</strong><br/><em>Tipo Pacco:</em> <strong>"+tipoPaccoText+"</strong></div><div style='text-align:right'><button class='animate action-button red' onClick='removePack(\""+idCodice+"\",\""+destinatario+"\");'>Rimuovi</button></div></li>";
 						
 						$("#"+destinatario+" ul").append(li);
-					} else alert("Destinatario e Corriere devono essere valorizzati");
+					} else{
+						 new BootstrapDialog()
+						 	.setTitle('<i class="fa fa-exclamation-triangle"> </i> Attenzione')
+				            .setMessage('Destinatario e corriere devono essere valorizzati')
+				            .setType(BootstrapDialog.TYPE_DANGER)
+				            .open();
+						
+					}
 				}
 				$("#codice").val("");
 			}
@@ -194,16 +168,23 @@ $(document).ready(function(){
 	$("#codice").on("blur",function(){$("#codice").val("")});
 	
 	$("#save").click(function(e){
+		e.preventDefault();
 		if($("#pacchi section").length == 0){
-			alert("Nessun pacco sparato.");
+			 new BootstrapDialog()
+			 	.setTitle('<i class="fa fa-exclamation-triangle"> </i> Attenzione')
+	            .setMessage('Nessun pacco sparato')
+	            .setType(BootstrapDialog.TYPE_DANGER)
+	            .open();
 			return;
-		}
+			
+		} 
+
 		$("#pacchiForm").submit();
 	});
 
 	$("#pacchiForm").submit(function(e) {
-
-	    var url = "?action=save"; // the script where you handle the form input.
+		
+		var url = "?action=save"; // the script where you handle the form input.
 
 	    $.ajax({
 	           type: "POST",
@@ -213,10 +194,18 @@ $(document).ready(function(){
 	           success: function(data)
 	           {
 	               if(!data.errors){
-		               alert("Dati salvati con successo!");
-		               $("#pacchi").html("");
-	               } else {
-		               alert("Errore durante il salvataggio.\n\n"+data.errors);
+	            	   new BootstrapDialog()
+					 	.setTitle('<i class="fa fa-info"> </i> Informazione')
+			            .setMessage("Dati salvati con successo")
+			            .setType(BootstrapDialog.TYPE_SUCCESS)
+			            .open();					
+	                   $("#pacchi").html("");
+		           } else {
+		        	   new BootstrapDialog()
+					 	.setTitle('<i class="fa fa-exclamation-triangle"> </i> Errore durante il salvataggio')
+			            .setMessage(data.errors)
+			            .setType(BootstrapDialog.TYPE_DANGER)
+			            .open();					
 	               }
 	           }
 	         });

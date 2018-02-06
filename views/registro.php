@@ -1,6 +1,3 @@
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
-
 <h1>Registro</h1>
 
 <table id="registro_view" class="display" width="100%" cellspacing="0">
@@ -45,32 +42,33 @@
 </table>
 <script>
 $(document).ready(function(){
-	$("#registro_view").DataTable({
-		"language": {
-		    "sEmptyTable":     "Nessun dato presente nella tabella",
-		    "sInfo":           "Vista da _START_ a _END_ di _TOTAL_ elementi",
-		    "sInfoEmpty":      "Vista da 0 a 0 di 0 elementi",
-		    "sInfoFiltered":   "(filtrati da _MAX_ elementi totali)",
-		    "sInfoPostFix":    "",
-		    "sInfoThousands":  ".",
-		    "sLengthMenu":     "Visualizza _MENU_ elementi",
-		    "sLoadingRecords": "Caricamento...",
-		    "sProcessing":     "Elaborazione...",
-		    "sSearch":         "Cerca:",
-		    "sZeroRecords":    "La ricerca non ha portato alcun risultato.",
-		    "oPaginate": {
-		        "sFirst":      "Inizio",
-		        "sPrevious":   "Precedente",
-		        "sNext":       "Successivo",
-		        "sLast":       "Fine"
-		    },
-		    "oAria": {
-		        "sSortAscending":  ": attiva per ordinare la colonna in ordine crescente",
-		        "sSortDescending": ": attiva per ordinare la colonna in ordine decrescente"
-		    }
-		},
-		"lengthMenu": [ 25, 50, 75, 100 ]
-	});
-
+	
+		$("#registro_view").DataTable({
+			"language": {
+			    "sEmptyTable":     "Nessun dato presente nella tabella",
+			    "sInfo":           "Vista da _START_ a _END_ di _TOTAL_ elementi",
+			    "sInfoEmpty":      "Vista da 0 a 0 di 0 elementi",
+			    "sInfoFiltered":   "(filtrati da _MAX_ elementi totali)",
+			    "sInfoPostFix":    "",
+			    "sInfoThousands":  ".",
+			    "sLengthMenu":     "Visualizza _MENU_ elementi",
+			    "sLoadingRecords": "Caricamento...",
+			    "sProcessing":     "Elaborazione...",
+			    "sSearch":         "Cerca:",
+			    "sZeroRecords":    "La ricerca non ha portato alcun risultato.",
+			    "oPaginate": {
+			        "sFirst":      "Inizio",
+			        "sPrevious":   "Precedente",
+			        "sNext":       "Successivo",
+			        "sLast":       "Fine"
+			    },
+			    "oAria": {
+			        "sSortAscending":  ": attiva per ordinare la colonna in ordine crescente",
+			        "sSortDescending": ": attiva per ordinare la colonna in ordine decrescente"
+			    }
+			},
+			"lengthMenu": [ 25, 50, 75, 100 ]
+		});
 });
+
 </script>

@@ -33,45 +33,6 @@ select, input{
 	font-weight:normal;
 }
 
-.animate
-{
-	transition: all 0.1s;
-	-webkit-transition: all 0.1s;
-}
-
-.action-button
-{
-	border-radius: 0.6em;
-	color: #FFF;
-	text-decoration: none;	
-	cursor:pointer;
-	padding:0.3em;
-	margin:-0.6em 0;
-}
-
-.blue
-{
-	border:none;
-	background-color: #00a1cb;
-	text-shadow: 0px 2px #004;
-}
-
-.green
-{
-	border:none;
-	background-color: #080;
-	text-shadow: 0px 2px #040;
-	top:0;
-}
-
-.red
-{
-	border:none;
-	background-color: #800;
-	text-shadow: 0px 2px #400;
-}
-
-
 #pacchi{
 	box-sizing: border-box;
 	margin-top:0.3em;
@@ -143,7 +104,7 @@ section{box-sizing: border-box;}
 <body>
 <h1>Pacchi in Uscita</h1>
 <h2>Pacchi selezionati: <span id="countPacchi">0</span></h2>
-<div id="actions">Azioni: <button id="dispatch" class="action-button shadow animate blue">Consegna</button></span><span id="action"></span></div>
+<div id="actions">Azioni: <button id="dispatch" class="btn btn-primary"><i class="fa fa-gift"> </i> Consegna</button></span><span id="action"></span></div>
 <form id="pacchiForm" method="POST">
 <div id="pacchi" class="row fix">
 <?php foreach($pacchiInUscita as $idDestinatario => $pacchi):?>
@@ -203,7 +164,7 @@ $(document).ready(function(){
 
 		$('#dispatch').hide();
 		
-		$("#action").html("Passare il badge... <i class='fa fa-sync fa-spin'></i> &nbsp;<button class='action-button cancel shadow animate red'>Annulla</button>");
+		$("#action").html("Passare il badge... <i class='fa fa-sync fa-spin'></i> &nbsp;<button class='cancel btn btn-danger'><i class='fa fa-times'> </i> Annulla</button>");
 		refreshButtons();
 		$("#codice").focus();
 	});
@@ -235,13 +196,29 @@ $(document).ready(function(){
 		           success: function(data)
 		           {
 		        	   if(!data.errors){
-			               alert("Dati salvati con successo!");
-			               $("#pacchiInUscita").click();
+		        		   new BootstrapDialog()
+						 	.setTitle('<i class="fa fa-info"> </i> Informazione')
+				            .setMessage("Dati salvati con successo")
+				            .setType(BootstrapDialog.TYPE_SUCCESS)
+				            .onHide(function(dialogRef){
+				            	$("#pacchiInUscita").click();
+	            			})
+	            			.open();	
 		               } else {
-			               alert("Errore durante il salvataggio.\n\n"+data.errors);
+		            	   new BootstrapDialog()
+						 	.setTitle('<i class="fa fa-exclamation-triangle"> </i> Errore durante il salvataggio')
+				            .setMessage(data.errors)
+				            .setType(BootstrapDialog.TYPE_DANGER)
+				            .open();
 		               }
 		           },		          
-		           error: function(){ alert("Errore di connessione!")}
+		           error: function(){ 
+		        	   new BootstrapDialog()
+					 	.setTitle('<i class="fa fa-exclamation-triangle"> </i> Attenzione')
+			            .setMessage("Errore di connessione")
+			            .setType(BootstrapDialog.TYPE_DANGER)
+			            .open();
+			       }
 		         });
 	        
 		})
@@ -264,15 +241,25 @@ $(document).ready(function(){
 			           {
 				            $('#dispatch').hide();
 							if(!data){
-								alert("Utente non riconosciuto, riprovare.");
-								return;
+								 new BootstrapDialog()
+								 	.setTitle('<i class="fa fa-exclamation-triangle"> </i> Attenzione')
+						            .setMessage("Utente non riconosciuto.")
+						            .setType(BootstrapDialog.TYPE_DANGER)
+						            .open();
+						         return;
 							}
 
-							$("#action").html("Consegna a <strong><em>"+data.nome+" "+data.cognome+"</em></strong> <button class='action-button confirm shadow animate green'>Conferma</button>&nbsp;<button class='action-button cancel shadow animate red'>Annulla</button><input type='hidden' id='ricevente' value='"+data.idPersona+"'/>");
+							$("#action").html("Consegna a <strong><em>"+data.nome+" "+data.cognome+"</em></strong>&nbsp;&nbsp;<button class='confirm btn btn-success'><i class='fa fa-check'> </i> Ok</button> <button class='cancel btn btn-danger'><i class='fa fa-times'> </i> Annulla</button><input type='hidden' id='ricevente' value='"+data.idPersona+"'/>");
 							$("#numBadge").blur();
 							refreshButtons();
 			           },
-			           error: function(){ alert("Errore di connessione!")}
+			           error: function(){ 
+			        	   new BootstrapDialog()
+						 	.setTitle('<i class="fa fa-exclamation-triangle"> </i> "Attenzione')
+				            .setMessage("Errore di connessione")
+				            .setType(BootstrapDialog.TYPE_DANGER)
+				            .open();
+				       }
 			         });
 				
 			} else {
