@@ -32,9 +32,9 @@
 			<td><?=$row[Corrieri::CORRIERE];?></td>
 			<td><?=$row[Registro::CODICE_ESTERNO];?></td>
 			<td><?=Personale::getInstance()->getNominativo($row[Registro::DESTINATARIO]);?></td>
-			<td><?=Utils::convertDateFormat($row[Registro::DATA_ARRIVO],DB_DATE_FORMAT,"d/m/Y");?></td>
+			<td><?=Utils::convertDateFormat($row[Registro::DATA_ARRIVO],DB_DATE_FORMAT,"d/m/Y H:i");?></td>
 			<td><?=Personale::getInstance()->getNominativo($row[Registro::RICEVENTE]);?></td>
-			<td><?=Utils::convertDateFormat($row[Registro::DATA_CONSEGNA],DB_DATE_FORMAT,"d/m/Y");?></td>
+			<td><?=Utils::convertDateFormat($row[Registro::DATA_CONSEGNA],DB_DATE_FORMAT,"d/m/Y H:i");?></td>
 			<td><?=$row[Registro::ID_PACCO] ? "Si" : "";?></td>
 		</tr>
 		<?php endforeach;?>

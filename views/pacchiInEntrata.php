@@ -46,7 +46,6 @@ select, input{
 	list-style-type:none;
 	margin:0.4em 0.3em;
 	padding:0.3em;
-
 }
 
 #pacchi ul li{
@@ -54,7 +53,8 @@ select, input{
 	border:2px solid #d92;
 	border-radius: 3px;
 	background-color: #fc7;
-	
+	padding-top:1em;
+	position:relative;
 }
 
 #pacchi strong{
@@ -82,6 +82,16 @@ select, input{
     border-radius: 14px 0 0 0;
 	font-size:1.5em;
 
+}
+
+.removeBtn{
+	position:absolute;
+	top:0;
+	right:0.2em;
+}
+
+.removeBtn button{
+	padding:0 !important;
 }
 
 section{box-sizing: border-box;}
@@ -148,7 +158,7 @@ $(document).ready(function(){
 						inputData += "<input type='hidden' name='corriere["+destinatario+"][]' value='"+corriere+"'/>";
 						inputData += "<input type='hidden' name='privato["+destinatario+"][]' value='"+tipoPacco+"'/>";
 						
-						var li = "<li id='"+idCodice+"'>"+inputData+"<div style='line-height:2em'><em>Codice: </em><strong>"+codice+"</strong><br/><em>Corriere:</em> <strong>"+corriereText+"</strong><br/><em>Tipo Pacco:</em> <strong>"+tipoPaccoText+"</strong></div><div style='text-align:right'><button class='animate action-button red' onClick='removePack(\""+idCodice+"\",\""+destinatario+"\");'>Rimuovi</button></div></li>";
+						var li = "<li id='"+idCodice+"'>"+inputData+"<div style='line-height:2em'><em>Codice: </em><strong>"+codice+"</strong><br/><em>Corriere:</em> <strong>"+corriereText+"</strong><br/><em>Tipo Pacco:</em> <strong>"+tipoPaccoText+"</strong></div><div style='text-align:right'><div class='removeBtn'><button class='btn btn-danger' onClick='removePack(\""+idCodice+"\",\""+destinatario+"\");'>X</button></div></div></li>";
 						
 						$("#"+destinatario+" ul").append(li);
 					} else{
@@ -195,7 +205,7 @@ $(document).ready(function(){
 	           {
 	               if(!data.errors){
 	            	   new BootstrapDialog()
-					 	.setTitle('<i class="fa fa-info"> </i> Informazione')
+					 	.setTitle('<i class="fa fa-info"> </i>')
 			            .setMessage("Dati salvati con successo")
 			            .setType(BootstrapDialog.TYPE_SUCCESS)
 			            .open();					

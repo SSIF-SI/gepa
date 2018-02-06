@@ -42,7 +42,7 @@ define ( "ROOT_PASSWORD", "!_p4cch1_!" );
 define ( "ROOT_DATABASE", "gestione_pacchi" );
 
 define ( "PAGE_TITLE_PREFIX", "Gestione Pacchi [TEST]" );
-define ( "DB_DATE_FORMAT", "Y-m-d" );
+define ( "DB_DATE_FORMAT", "Y-m-d H:i:s" );
 define ( "ACCESS_DENIED", "<br><br/><p class='error'>Attenzione!! L'utente non ha i privilegi per accedere a questo contenuto.</p>" );
 define ( "INEXISTENT", "<br><br/><p class='error'>Attenzione!! Contenuto inesistente.</p>" );
 
