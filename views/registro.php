@@ -68,7 +68,8 @@ $(document).ready(function(){
 		        "sSortAscending":  ": attiva per ordinare la colonna in ordine crescente",
 		        "sSortDescending": ": attiva per ordinare la colonna in ordine decrescente"
 		    }
-		}
+		},
+		"lengthMenu": [ 25, 50, 75, 100 ]
 	});
 
 });
