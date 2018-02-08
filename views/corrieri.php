@@ -27,6 +27,8 @@ $(document).ready(function(){
 	refreshButtons();
 	
 	function refreshButtons(){
+		$(".edit,.delete,.new").unbind();
+		
 		$(".delete").click(function(e){
 			var id = $(this).parent().parent().attr("id");
 			var corriere =$("#"+id+" .corriere").first().html();
