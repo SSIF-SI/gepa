@@ -113,10 +113,10 @@ section{box-sizing: border-box;}
 		<h1><?=Personale::getInstance()->getNominativo($idDestinatario)?></h1>
 		<ul>
 		<?php foreach ($pacchi as $pacco):?>
-			<li id="<?=preg_replace('/[^a-z0-9]/i', "", $pacco[Registro::CODICE_ESTERNO]);?>">
+			<li id="<?=preg_replace('/[^a-z0-9]/i', "", $pacco[Registro::CODICE]);?>">
 				<input name="id[]" value="<?=$pacco[Registro::ID_PACCO]?>" type="hidden">
 				<div style="line-height:2em">
-					<em>Codice: </em><strong><?=$pacco[Registro::CODICE_ESTERNO]?></strong><br>
+					<em>Codice: </em><strong><?=$pacco[Registro::CODICE]?></strong><br>
 					<em>Corriere:</em> <strong><?=$corrieri[$pacco[Registro::ID_CORRIERE]]?></strong><br>
 					<em>Tipo Pacco:</em> <strong><?=$pacco[Registro::PRIVATO] ? "Privato" : "Istituzionale"?></strong>
 				</div>
@@ -146,7 +146,8 @@ $(document).ready(function(){
 		});
 		refreshCountPacchi();
 	})
-	$("li").click(function(e){
+	
+	$("section ul li").click(function(e){
 		if(Const.waitingForBadge) return;
 		
 		$(this).toggleClass("selected");

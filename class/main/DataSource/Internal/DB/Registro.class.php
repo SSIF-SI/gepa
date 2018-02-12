@@ -6,7 +6,7 @@ class Registro extends Crud {
 	
 	const DATA_ARRIVO = "dataArrivo";
 	
-	const CODICE_ESTERNO = "codiceEsterno";
+	const CODICE = "codice";
 	
 	const ID_CORRIERE = Corrieri::ID_CORRIERE;
 	
@@ -17,6 +17,8 @@ class Registro extends Crud {
 	const DATA_CONSEGNA = "dataConsegna";
 	
 	const PRIVATO = "privato";
+	
+	const MEPA = "mepa";
 	
 	protected $TABLE = "registro";
 	

@@ -20,15 +20,16 @@ class ActionManager {
 		
 		$registro = new Registro($this->_dbConnector);
 		
-		foreach($_POST[Registro::CODICE_ESTERNO] as $idDestinatario => $list){
+		foreach($_POST[Registro::CODICE] as $idDestinatario => $list){
 			$this->_dbConnector->begin();
 			foreach ($list as $idRow=>$codice){
 				$registroRow = $registro->getStub();
 				$registroRow[Registro::DATA_ARRIVO] = $dataArrivo;
-				$registroRow[Registro::CODICE_ESTERNO] = $codice;
+				$registroRow[Registro::CODICE] = $codice;
 				$registroRow[Registro::ID_CORRIERE] = $_POST[Corrieri::CORRIERE][$idDestinatario][$idRow];
 				$registroRow[Registro::DESTINATARIO] = $idDestinatario;
 				$registroRow[Registro::PRIVATO] = $_POST[Registro::PRIVATO][$idDestinatario][$idRow];
+				$registroRow[Registro::MEPA] = $_POST[Registro::MEPA][$idDestinatario][$idRow];
 				
 				$result = $registro->save($registroRow);
 				if($result->getErrors()){
