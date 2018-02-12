@@ -176,6 +176,9 @@ $(document).ready(function(){
 	}	
 
 	function refreshButtons(){
+
+		$(".cancel,.confirm").unbind();
+		
 		$(".cancel").click(function(e){
 			$('#dispatch').show();
 			$("#action").html("");

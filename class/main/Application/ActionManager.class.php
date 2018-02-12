@@ -38,9 +38,12 @@ class ActionManager {
 				}
 			}
 			$nominativo = Personale::getInstance()->getNominativo($idDestinatario);
+			$to = Personale::getInstance()->getEmail($idDestinatario);
+			if(!$to) $to = "";
 			$nPacchi = count($list);
-			$vowel = $nPacchi == 1 ? "o" : "i";
-			$sent = PHPMailer::sendMail(MAIL_FROM, "", "[TEST]", "$nominativo hai {$nPacchi} pacch{$vowel} da ritirare in magazzino");
+			$vowel = $nPacchi == 1 ? "o" : "hi";
+			$vowelD = $nPacchi == 1 ? "o" : "i";
+			$sent = PHPMailer::sendMail(MAIL_FROM, $to, "[TEST]", "$nominativo hai {$nPacchi} nuov{$vowelD} pacc{$vowel} da ritirare in magazzino");
 			if($sent) 
 				$this->_dbConnector->commit();
 			else {
@@ -56,8 +59,14 @@ class ActionManager {
 		$list = Personale::getInstance()->getPersone();
 		$persona = Utils::filterList($list, Personale::NUM_BADGE, $numBadge);
 		if(is_array($persona)) $persona = reset($persona);
-		$this->_ARP = new AjaxResultParser();
 		$this->_ARP->encode($persona);
+	}
+	
+	public function setUser(){
+		$user = Personale::getInstance()->getEmail($_POST['operatore']);
+		Session::getInstance()->set(AUTH_USER, $user);
+		Session::getInstance()->set(AUTH_USER, $user);
+		$this->_ARP->encode($this->_eh->getErrors(true));
 	}
 	
 	function dispatch(){
@@ -79,14 +88,19 @@ class ActionManager {
 			if(!$sent){
 				$this->_eh->setErrors("Impossibile inviare alcune mail di notifica");
 			}
+			
 			$listOfPack = $registro->getBy(Registro::ID_PACCO, $ids);
 			$listOfPack = Utils::groupListBy($listOfPack, Registro::DESTINATARIO);
+			
 			foreach($listOfPack as $idPersona=>$list){
+				$nPacchi = count($list);
 				if($idPersona == $ricevente) continue;
+				$to = Personale::getInstance()->getEmail($idPersona);
+				if(!$to) $to = "";
 				$nPacchi = count($list);
 				$vowel = $nPacchi == 1 ? "o" : "hi";
 				$vowelD = $nPacchi == 1 ? "o" : "i";
-				$sent = PHPMailer::sendMail(MAIL_FROM, "", "[TEST]", "$nominativo ha ritirato {$nPacchi} pacc{$vowel} destinat{$vowelD} a te dal magazzino.");
+				$sent = PHPMailer::sendMail(MAIL_FROM, $to, "[TEST]", "$nominativo ha ritirato {$nPacchi} pacc{$vowel} destinat{$vowelD} a te dal magazzino.");
 				if(!$sent){
 					$this->_eh->setErrors("Impossibile inviare alcune mail di notifica");
 				}

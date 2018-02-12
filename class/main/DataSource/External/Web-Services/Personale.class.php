@@ -62,7 +62,6 @@ class Personale {
 		$this->_personale = Utils::getListfromField ( $sessionPersonale[self::PERSONALE], null, self::ID_PERSONA );
 		$this->_cfId = Utils::getListfromField ( $sessionPersonale[self::PERSONALE], self::ID_PERSONA, self::CODICE_FISCALE );
 		$this->_email = Utils::getListfromField ( $sessionPersonale[self::PERSONALE], self::ID_PERSONA, self::EMAIL );
-		
 		$this->_gruppi = Utils::getListfromField ( $sessionPersonale[self::GRUPPI], null, "sigla" );
 		
 		$this->_progetti = Utils::getListfromField ( $sessionPersonale[self::PROGETTI], null, "acronimo" );
@@ -99,6 +98,10 @@ class Personale {
 
 	public function getPersona($id) {
 		return $this->_persone [$id];
+	}
+
+	public function getEmail($id) {
+		return array_search($id,$this->_email);
 	}
 
 	public function getNominativo($id) {

@@ -29,10 +29,10 @@
 				<div class="f1_container">
 					<div class="f1_card">
 					  <div class="front face">
-							<div class="pacchiIn circleBase type1 front"></div>
+							<div class="pacchiInEntrata circleBase type1 front"></div>
 					  </div>
 					  <div class="back face center">
-							<div class="pacchiIn circleBase type1 back"></div>
+							<div class="pacchiInEntrata circleBase type1 back"></div>
 					  </div>
 					</div>
 				</div>
@@ -43,10 +43,10 @@
 				<div class="f1_container">
 					<div class="f1_card">
 					  <div class="front face">
-							<div class="pacchiOut circleBase type1 front"></div>
+							<div class="pacchiInUscita circleBase type1 front"></div>
 					  </div>
 					  <div class="back face center">
-							<div class="pacchiOut circleBase type1 back"></div>
+							<div class="pacchiInUscita circleBase type1 back"></div>
 					  </div>
 					</div>
 				</div>
@@ -82,7 +82,9 @@
 		</li>
 	</ul>
 </nav>
+<section id="s_operatore"><?=$operatore?></section>
 <section id="main">
+<?php if(isset($view)) include($view);?>
 </section>
 <script>
 $(document).ready(function(){
@@ -93,7 +95,7 @@ $(document).ready(function(){
 		$("."+href).addClass("active");
 		
 		href += ".php";
-		$("#main").html("<h2>Attendere...</h2>");
+		//$("#main").html("<h2>Attendere...</h2>");
 		$("#main").load("<?=BUSINESS_HTTP_PATH?>"+href);
 		
 	});

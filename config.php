@@ -26,6 +26,11 @@ spl_autoload_register ( array (
 		'IncludeClass' 
 ) );
 
+if (isset ( $_GET ['logout'] )) {
+	Session::getInstance ()->destroy ();
+	Common::redirect();
+}
+
 /*
 // LOGIN
 
@@ -40,7 +45,7 @@ if (isset ( $_GET ['logout'] )) {
 //Session::getInstance ()->set ( AUTH_USER, $auth->getUser ( 'email' ) );
 //Session::getInstance ()->set ( AUTH_USER, "claudio.montani@isti.cnr.it" );
 // Session::getInstance ()->set ( AUTH_USER, "lucio.lelii@isti.cnr.it" );
-Session::getInstance ()->set ( AUTH_USER, "gestorePacchi@isti.cnr.it" );
+//Session::getInstance ()->set ( AUTH_USER, "gestorePacchi@isti.cnr.it" );
 
 // URI caching
 TurnBack::setLastHttpReferer ();
@@ -51,4 +56,14 @@ $_SERVER ['SCRIPT_NAME'] = $self [count ( $self ) - 1];
 
 $Application = new Application();
 
+
+if(!Session::getInstance ()->exists(AUTH_USER)){
+	require(BUSINESS_PATH."operatore.php");
+	die();
+}
+
+
+$operatore = Personale::getInstance()->getPersonabyEmail(Session::getInstance()->get(AUTH_USER));
+$operatore = Personale::getInstance()->getNominativo($operatore[Personale::ID_PERSONA]);
+$operatore = "Operatore: <strong><em>$operatore</em></strong> <a href='?logout' class='btn btn-danger'>Log Out</a>";
 //finfo("TurnBack Tree: %o",Session::getInstance()->get('turnbacktree'));
