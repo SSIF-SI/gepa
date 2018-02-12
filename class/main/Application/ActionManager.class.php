@@ -22,13 +22,15 @@ class ActionManager {
 		
 		foreach($_POST[Registro::CODICE] as $idDestinatario => $list){
 			$this->_dbConnector->begin();
+			$listToSignal = array();
 			foreach ($list as $idRow=>$codice){
+				$privato = $_POST[Registro::PRIVATO][$idDestinatario][$idRow];
 				$registroRow = $registro->getStub();
 				$registroRow[Registro::DATA_ARRIVO] = $dataArrivo;
 				$registroRow[Registro::CODICE] = $codice;
 				$registroRow[Registro::ID_CORRIERE] = $_POST[Corrieri::CORRIERE][$idDestinatario][$idRow];
 				$registroRow[Registro::DESTINATARIO] = $idDestinatario;
-				$registroRow[Registro::PRIVATO] = $_POST[Registro::PRIVATO][$idDestinatario][$idRow];
+				$registroRow[Registro::PRIVATO] = $privato;
 				$registroRow[Registro::MEPA] = $_POST[Registro::MEPA][$idDestinatario][$idRow];
 				
 				$result = $registro->save($registroRow);
@@ -37,17 +39,25 @@ class ActionManager {
 					$this->_eh->setErrors("Impossibile creare la riga di registro:".json_encode($registroRow));
 					break 2;
 				}
+				if($privato) array_push($listToSignal, $codice);
 			}
 			$nominativo = Personale::getInstance()->getNominativo($idDestinatario);
 			$to = Personale::getInstance()->getEmail($idDestinatario);
 			if(!$to) $to = "";
-			$nPacchi = count($list);
-			$vowel = $nPacchi == 1 ? "o" : "hi";
-			$vowelD = $nPacchi == 1 ? "o" : "i";
-			$sent = PHPMailer::sendMail(MAIL_FROM, $to, "[TEST]", "$nominativo hai {$nPacchi} nuov{$vowelD} pacc{$vowel} da ritirare in magazzino");
+			$nPacchi = count($listToSignal);
+			
+			if($nPacchi > 0){
+				$vowel = $nPacchi == 1 ? "o" : "hi";
+				$vowelD = $nPacchi == 1 ? "o" : "i";
+				$sent = PHPMailer::sendMail(MAIL_FROM, $to, "[TEST]", "$nominativo hai {$nPacchi} nuov{$vowelD} pacc{$vowel} da ritirare in magazzino");
+			} else {
+				$sent = true;
+			}
+			
 			if($sent) 
 				$this->_dbConnector->commit();
 			else {
+				$this->_dbConnector->rollback();
 				$this->_eh->setErrors("Impossibile inviare la mail a ".$nominativo);
 				break;
 			}
