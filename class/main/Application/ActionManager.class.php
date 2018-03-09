@@ -49,7 +49,7 @@ class ActionManager {
 			if($nPacchi > 0){
 				$vowel = $nPacchi == 1 ? "o" : "hi";
 				$vowelD = $nPacchi == 1 ? "o" : "i";
-				$sent = PHPMailer::sendMail(MAIL_FROM, $to, "[TEST]", "$nominativo hai {$nPacchi} nuov{$vowelD} pacc{$vowel} da ritirare in magazzino");
+				$sent = PHPMailer::sendMail(MAIL_FROM, $to, "[TEST] Gestione Pacchi Magazzino", "$nominativo hai {$nPacchi} nuov{$vowelD} pacc{$vowel} da ritirare in magazzino. <br>Ricorda di portare con te il badge.<Br> Per informazioni numeri interni di riferimento: 3135/3140 ");
 			} else {
 				$sent = true;
 			}
