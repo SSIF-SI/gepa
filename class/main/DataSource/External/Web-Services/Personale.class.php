@@ -108,7 +108,7 @@ class Personale {
 		if (empty ( $id ))
 			return false;
 		$result = $this->getPersona ( $id );
-		$result = $result[self::COGNOME] . " " . $result[self::NOME];
+		$result = $result[self::NOME] . " " . $result[self::COGNOME];
 		$result = trim ( $result );
 		return empty ( $result ) ? null : $result;
 	}

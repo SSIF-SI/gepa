@@ -229,8 +229,17 @@ $(document).ready(function(){
 	}
 	
 	$("#codice").keydown(function(e){
-		if(e.keyCode == 13){
-			e.preventDefault();
+		var c = e.which || e.keyCode;//Get key code
+	    switch (c) {
+		   case 74://Block Ctrl+J
+		      	$(this).val("");
+		        e.preventDefault();     
+	            e.stopPropagation();
+	            return;
+	        	break;
+	       case 13:
+
+		    e.preventDefault();
 			
 			if(Const.waitingForBadge){
 				var badge = $(this).val().substring(4,10);

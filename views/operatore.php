@@ -17,16 +17,24 @@
 <input type="text" id="numBadge" autocomplete="off" />
 
 <script>
+$("#numBadge").focus();
+
 $(document).ready(function(){
-	$("#numBadge").focus();
 
 	var buttonClicked = $(".active").first().parent().parent().parent().parent().attr("id");
 	if(buttonClicked == undefined) 
 		buttonClicked = $("nav a").first().attr("id");
 
 	$("#numBadge").keydown(function(e){
-		
-		if(e.keyCode == 13){
+		var c = e.which || e.keyCode;//Get key code
+	    switch (c) {
+		   case 74://Block Ctrl+J
+		      	$(this).val("");
+		        e.preventDefault();     
+	            e.stopPropagation();
+	            return;
+	        	break;
+	       case 13:
 			e.preventDefault();
 			
 			var badge = $(this).val().substring(4,10);
@@ -71,6 +79,7 @@ $(document).ready(function(){
 			$(this).val("");
 			
 		}
+		
 	});
 
 	function refreshButtons(){
