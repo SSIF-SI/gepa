@@ -6,7 +6,11 @@ if(!Utils::checkAjax())
 $corrieriObj = new Corrieri($Application->getDBConnector());
 $corrieri = Utils::getListfromField($corrieriObj->getAll(Corrieri::CORRIERE), Corrieri::CORRIERE, Corrieri::ID_CORRIERE);
 
-$listOfPersone = Personale::getInstance()->getPersonale();
+$listOfPersone = Personale::getInstance()->getPersone();
+foreach ($listOfPersone as $k=>$item){
+	if(is_null($item[Personale::NUM_BADGE]))
+		unset($listOfPersone[$k]);
+} 
 
 include(VIEWS_PATH.basename(__FILE__));
 ?>

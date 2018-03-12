@@ -93,9 +93,10 @@ class ActionManager {
 			$this->_eh->setErrors("Impossibile salvare i dati: ".$errors);
 		} else {
 
+			$to = Personale::getInstance()->getEmail($ricevente);
 			$nPacchi = count($ids);
 			$vowel = $nPacchi == 1 ? "o" : "hi";
-			$sent = PHPMailer::sendMail(MAIL_FROM, "", "[TEST] Gestione Pacchi Magazzino", "$nominativo hai ritirato {$nPacchi} pacc{$vowel} dal magazzino.");
+			$sent = PHPMailer::sendMail(MAIL_FROM, $to, "[TEST] Gestione Pacchi Magazzino", "$nominativo hai ritirato {$nPacchi} pacc{$vowel} dal magazzino.");
 			if(!$sent){
 				$this->_eh->setErrors("Impossibile inviare alcune mail di notifica");
 			}
