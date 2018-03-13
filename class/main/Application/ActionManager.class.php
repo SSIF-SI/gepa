@@ -49,7 +49,7 @@ class ActionManager {
 			if($nPacchi > 0){
 				$vowel = $nPacchi == 1 ? "o" : "hi";
 				$vowelD = $nPacchi == 1 ? "o" : "i";
-				$sent = PHPMailer::sendMail(MAIL_FROM, $to, "[TEST] Gestione Pacchi Magazzino", "$nominativo hai {$nPacchi} nuov{$vowelD} pacc{$vowel} da ritirare in magazzino.\nRicorda di portare con te il badge.\n\nPer informazioni numeri interni di riferimento: 3135/3140 ");
+				$sent = PHPMailer::sendMail(MAIL_FROM, $to, "Gestione Pacchi Magazzino", "$nominativo hai {$nPacchi} nuov{$vowelD} pacc{$vowel} da ritirare in magazzino.\nRicorda di portare con te il badge.\n\nPer informazioni numeri interni di riferimento: 3135/3140 ");
 			} else {
 				$sent = true;
 			}
@@ -96,7 +96,7 @@ class ActionManager {
 			$to = Personale::getInstance()->getEmail($ricevente);
 			$nPacchi = count($ids);
 			$vowel = $nPacchi == 1 ? "o" : "hi";
-			$sent = PHPMailer::sendMail(MAIL_FROM, $to, "[TEST] Gestione Pacchi Magazzino", "$nominativo hai ritirato {$nPacchi} pacc{$vowel} dal magazzino.");
+			$sent = PHPMailer::sendMail(MAIL_FROM, $to, "Gestione Pacchi Magazzino", "$nominativo hai ritirato {$nPacchi} pacc{$vowel} dal magazzino.");
 			if(!$sent){
 				$this->_eh->setErrors("Impossibile inviare alcune mail di notifica");
 			}
@@ -112,7 +112,7 @@ class ActionManager {
 				$nPacchi = count($list);
 				$vowel = $nPacchi == 1 ? "o" : "hi";
 				$vowelD = $nPacchi == 1 ? "o" : "i";
-				$sent = PHPMailer::sendMail(MAIL_FROM, $to, "[TEST] Gestione Pacchi Magazzino", "$nominativo ha ritirato {$nPacchi} pacc{$vowel} destinat{$vowelD} a te dal magazzino.");
+				$sent = PHPMailer::sendMail(MAIL_FROM, $to, "Gestione Pacchi Magazzino", "$nominativo ha ritirato {$nPacchi} pacc{$vowel} destinat{$vowelD} a te dal magazzino.");
 				if(!$sent){
 					$this->_eh->setErrors("Impossibile inviare alcune mail di notifica");
 				}
