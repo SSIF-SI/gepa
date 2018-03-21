@@ -20,7 +20,10 @@
 $("#numBadge").focus();
 
 $(document).ready(function(){
-
+	$(document).click(function(e){
+		$("#numBadge").focus();
+	});
+	
 	var buttonClicked = $(".active").first().parent().parent().parent().parent().attr("id");
 	if(buttonClicked == undefined) 
 		buttonClicked = $("nav a").first().attr("id");
