@@ -145,6 +145,12 @@ $(document).ready(function(){
 		}
 		
 	});
+	
+	$("#destinatario").on("change",function(){
+		var corriere = $("#corriere").val() != "";
+		if(corriere)
+			$("#scan").trigger("click");
+	});
 
 	$("#mepaCode").on("blur",function(){
 		$("#codice").focus();
@@ -250,6 +256,7 @@ $(document).ready(function(){
 			return;
 			
 		} 
+		$(this).attr("disabled","disabled");
 /*
 		$("#pacchiForm").submit();
 	});
@@ -272,6 +279,8 @@ $(document).ready(function(){
 			            .setType(BootstrapDialog.TYPE_SUCCESS)
 			            .open();					
 	                   $("#pacchi").html("");
+	                   		$("#save").removeAttr("disabled");
+
 		           } else {
 		        	   new BootstrapDialog()
 					 	.setTitle('<i class="fa fa-exclamation-triangle"> </i> Errore durante il salvataggio')
