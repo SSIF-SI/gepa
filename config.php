@@ -26,6 +26,11 @@ spl_autoload_register ( array (
 		'IncludeClass' 
 ) );
 
+if(isset($_GET['refreshSession'])){
+	print_r($_SESSION);
+	die();
+}
+
 if (isset ( $_GET ['logout'] )) {
 	Session::getInstance ()->destroy ();
 	Common::redirect();
@@ -55,7 +60,6 @@ $self = explode ( "/", $_SERVER ['PHP_SELF'] );
 $_SERVER ['SCRIPT_NAME'] = $self [count ( $self ) - 1];
 
 $Application = new Application();
-
 
 if(!Session::getInstance ()->exists(AUTH_USER)){
 	require(BUSINESS_PATH."operatore.php");

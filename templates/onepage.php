@@ -99,6 +99,11 @@ $(document).ready(function(){
 		$("#main").load("<?=BUSINESS_HTTP_PATH?>"+href);
 		
 	});
+
+	 var refreshTime = 600000; // in milliseconds, so 10 minutes
+     window.setInterval( function() {
+         $.get( '<?=HTTP_ROOT?>?refreshSession' );
+     }, refreshTime );
 });
 </script>
 </body>
