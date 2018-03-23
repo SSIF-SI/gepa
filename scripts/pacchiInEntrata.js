@@ -89,6 +89,7 @@ $(document).ready(function(){
 						var li = "<li id='"+idCodice+"'>"+inputData+"<div style='line-height:2em'><em>Codice: </em><strong>"+codice+"</strong><br/><em>Corriere:</em> <strong>"+corriereText+"</strong><br/><em>Tipo Pacco:</em> <strong>"+tipoPaccoText+"</strong>"+codiceMepa+"</div><div style='text-align:right'><div class='removeBtn'><button class='btn btn-danger' onClick='removePack(\""+idCodice+"\",\""+destinatario+"\");'>X</button></div></div></li>";
 						
 						$("#"+destinatario+" ul").append(li);
+						countPacks();
 					} else{
 						 new BootstrapDialog()
 						 	.setTitle('<i class="fa fa-exclamation-triangle"> </i> Attenzione')
@@ -167,5 +168,11 @@ function removePack(codice,destinatario){
 		$("#"+destinatario).parent().remove();
 		
 	}
+	countPacks();
 	$("#codice").focus();
+}
+
+function countPacks(){
+	var pacchiTotali = $("#pacchi ul li").length;
+	$("#nPacchi").html(pacchiTotali);
 }

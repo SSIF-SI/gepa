@@ -120,10 +120,11 @@ section{box-sizing: border-box;}
 		<option value="<?=$id?>"><?=$corriere?></option>
 		<?php endforeach;?>
 	</select>
-
 	<input type="text" id="codice" value="" />
 	<button id="scan" class="btn btn-success"><i class="fa fa-spinner"> </i> Scan</button>&nbsp;&nbsp;
 	<button id="save" class="btn btn-primary"><i class="fa fa-save"> </i> Salva</button>
+	<h2>Pacchi totali: <span id="nPacchi">0</span></h2>
+	
 <div id="pacchi" class="row fix">
 </div>
 </form>
