@@ -21,7 +21,7 @@
 
 </head>
 <body>
-<div id="title">Gestione pacchi</div>
+<div id="title">Gestione pacchi<br/></div>
 <nav id="leftnav">
 	<ul>
 		<li>
@@ -86,26 +86,8 @@
 <section id="main">
 <?php if(isset($view)) include($view);?>
 </section>
-<script>
-$(document).ready(function(){
-	$("nav a").click(function(e){
-		e.preventDefault();
-		var href=$(this).attr("href").replace("#","");
-		$(".circleBase").removeClass("active");
-		$("."+href).addClass("active");
-		
-		href += ".php";
-		//$("#main").html("<h2>Attendere...</h2>");
-		$("#main").load("<?=BUSINESS_HTTP_PATH?>"+href);
-		
-	});
-
-	 var refreshTime = 600000; // in milliseconds, so 10 minutes
-     window.setInterval( function() {
-         $.get( '<?=HTTP_ROOT?>?refreshSession' );
-     }, refreshTime );
-});
-</script>
+<script>var BUSINESS_HTTP_PATH = "<?=BUSINESS_HTTP_PATH ?>";</script>
+<script src="<?=SCRIPTS_PATH?>index.js"></script>
 </body>
 </html>
 

@@ -3,8 +3,6 @@ $(document).ready(function(){
 		waitingForBadge: false	
 	};
 
-	$("#dispatch").hide();
-	
 	$(".destinatario h1").click(function(e){
 		if(Const.waitingForBadge) return;
 		var id = $(this).parent().attr("id");
@@ -31,17 +29,64 @@ $(document).ready(function(){
 		}
 		Const.waitingForBadge = true;
 
-		$('#dispatch').hide();
+		$('#dispatch, #remove').hide();
 		
 		$("#action").html("Passare il badge... <i class='fa fa-sync fa-spin'></i> &nbsp;<button class='cancel btn btn-danger'><i class='fa fa-times'> </i> Annulla</button>");
 		refreshButtons();
 		$("#codice").focus();
 	});
 
+	$("#remove").click(function(e){
+		var pacchiDaEliminare = $("li.selected");
+		if(pacchiDaEliminare.length == 0){
+			alert("Nessun pacco selezionato");
+			return;
+		}
+		if(confirm("Sei sicuro?")){
+			var ids = [];
+			$(".selected input").each(function(i){
+				ids.push($(this).val());
+			})
+			$.ajax({
+		           type: "POST",
+		           url: "?action=delete",
+		           data: {ids: ids}, // serializes the form's elements.
+				   dataType: "json",
+		           success: function(data)
+		           {
+		        	   if(!data.errors){
+		        		   new BootstrapDialog()
+						 	.setTitle('<i class="fa fa-info"> </i> Informazione')
+				            .setMessage("Operazione andata a buon fine")
+				            .setType(BootstrapDialog.TYPE_SUCCESS)
+				            .onHide(function(dialogRef){
+				            	$("#pacchiInUscita").click();
+	            			})
+	            			.open();	
+		               } else {
+		            	   new BootstrapDialog()
+						 	.setTitle('<i class="fa fa-exclamation-triangle"> </i> Errore durante il salvataggio')
+				            .setMessage(data.errors)
+				            .setType(BootstrapDialog.TYPE_DANGER)
+				            .open();
+		               }
+		           },		          
+		           error: function(){ 
+		        	   new BootstrapDialog()
+					 	.setTitle('<i class="fa fa-exclamation-triangle"> </i> Attenzione')
+			            .setMessage("Errore di connessione")
+			            .setType(BootstrapDialog.TYPE_DANGER)
+			            .open();
+			       }
+		         });
+	        
+		}
+	});
+
 	function refreshCountPacchi(){
 		var pacchiDaConsegnare = $("li.selected").length;
 		$("#countPacchi").html(pacchiDaConsegnare);
-		pacchiDaConsegnare > 0 ? $("#dispatch").show() : $("#dispatch").hide();
+		pacchiDaConsegnare > 0 ? $("#buttonActions").show() : $("#buttonActions").hide();
 	}	
 
 	function refreshButtons(){
@@ -49,7 +94,7 @@ $(document).ready(function(){
 		$(".cancel,.confirm").unbind();
 		
 		$(".cancel").click(function(e){
-			$('#dispatch').show();
+			$('#dispatch, #remove').show();
 			$("#action").html("");
 			Const.waitingForBadge = false;
 			$("#codice").focus();
@@ -126,7 +171,8 @@ $(document).ready(function(){
 					   dataType: "json",
 			           success: function(data)
 			           {
-				            $('#dispatch').hide();
+				            $('#dispatch, #remove').hide();
+
 							if(!data){
 								 new BootstrapDialog()
 								 	.setTitle('<i class="fa fa-exclamation-triangle"> </i> Attenzione')

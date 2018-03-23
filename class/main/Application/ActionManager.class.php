@@ -12,6 +12,27 @@ class ActionManager {
 		$this->_eh = new ErrorHandler(false);
 	}
 	
+	public function delete(){
+		if(!Utils::checkAjax())
+			die(ACCESS_DENIED);
+		$registro = new Registro($this->_dbConnector);
+		$ids = $_POST['ids'];
+		$objects = $registro->getBy(Registro::ID_PACCO, $ids);
+		
+		$this->_dbConnector->begin();
+		foreach($objects as $object){
+			$eh = $registro->delete($object);
+			if($eh->getErrors()){
+				$this->_dbConnector->rollBack();
+				$this->_ARP->encode($eh->getErrors(true));
+				return;
+			}
+		}
+
+		$this->_dbConnector->commit();
+		$this->_ARP->encode($this->_eh->getErrors(true));
+	}
+	
 	public function save(){
 		if(!Utils::checkAjax())
 			die(ACCESS_DENIED);

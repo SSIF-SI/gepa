@@ -89,7 +89,7 @@ select, input{
 }
 
 
-#dispatch{
+#buttonActions{
 	display:none;
 }
 
@@ -99,7 +99,13 @@ section{box-sizing: border-box;}
 <body>
 <h1>Pacchi in Uscita</h1>
 <h2>Pacchi selezionati: <span id="countPacchi">0</span></h2>
-<div id="actions">Azioni: <button id="dispatch" class="btn btn-primary"><i class="fa fa-gift"> </i> Consegna</button></span><span id="action"></span></div>
+<div id="actions">
+Azioni: 
+<span id="buttonActions">
+	<button id="dispatch" class="btn btn-primary"><i class="fa fa-gift"> </i> Consegna</button><span id="action"></span>
+	<button id="remove" class="btn btn-danger"><i class="fa fa-times"> </i> Elimina</button>
+</span>
+</div>
 <form id="pacchiForm" method="POST">
 <div id="pacchi" class="row fix">
 <?php foreach($pacchiInUscita as $idDestinatario => $pacchi):?>
