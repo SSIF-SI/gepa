@@ -145,7 +145,9 @@ $(document).ready(function(){
 			            .setType(BootstrapDialog.TYPE_SUCCESS)
 			            .open();					
 	                   $("#pacchi").html("");
-	                   		$("#save").removeAttr("disabled");
+	                   $("#save").removeAttr("disabled");
+	               		countPacks();
+					
 
 		           } else {
 		        	   new BootstrapDialog()

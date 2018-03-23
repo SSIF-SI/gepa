@@ -109,7 +109,7 @@ section{box-sizing: border-box;}
 	<select id="destinatario">
 		<option value="">--Segli--</option>
 		<?php foreach($listOfPersone as $id=>$data) :?>
-		<option value="<?=$id?>"><?=$data['cognome']." ".$data['nome'];?></option>
+		<option value="<?=$id?>"><?=$data[Personale::COGNOME]." ".$data[Personale::NOME];?></option>
 		<?php endforeach;?>
 	</select>
 

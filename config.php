@@ -26,11 +26,6 @@ spl_autoload_register ( array (
 		'IncludeClass' 
 ) );
 
-if(isset($_GET['refreshSession'])){
-	print_r($_SESSION);
-	die();
-}
-
 if (isset ( $_GET ['logout'] )) {
 	Session::getInstance ()->destroy ();
 	Common::redirect();
