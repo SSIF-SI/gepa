@@ -105,6 +105,14 @@ section{box-sizing: border-box;}
 	<label for="mepaCode">MEPA:</label>
 	<input id="mepaCode" type="text" value="" size="7" disabled="disabled"/>
 	
+	<label for="corriere">Corriere:</label>
+	<select id="corriere">
+		<option value="">--Segli--</option>
+		<?php foreach($corrieri as $id=>$corriere) :?>
+		<option value="<?=$id?>"><?=$corriere?></option>
+		<?php endforeach;?>
+	</select>
+	
 	<label for="destinatario">Destinatario:</label>
 	<select id="destinatario">
 		<option value="">--Segli--</option>
@@ -113,13 +121,7 @@ section{box-sizing: border-box;}
 		<?php endforeach;?>
 	</select>
 
-	<label for="corriere">Corriere:</label>
-	<select id="corriere">
-		<option value="">--Segli--</option>
-		<?php foreach($corrieri as $id=>$corriere) :?>
-		<option value="<?=$id?>"><?=$corriere?></option>
-		<?php endforeach;?>
-	</select>
+	
 	<input type="text" id="codice" value="" />
 	<button id="scan" class="btn btn-success"><i class="fa fa-spinner"> </i> Scan</button>&nbsp;&nbsp;
 	<button id="save" class="btn btn-primary"><i class="fa fa-save"> </i> Salva</button>
