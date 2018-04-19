@@ -87,6 +87,7 @@ $(document).ready(function(){
 		var pacchiDaConsegnare = $("li.selected").length;
 		$("#countPacchi").html(pacchiDaConsegnare);
 		pacchiDaConsegnare > 0 ? $("#buttonActions").show() : $("#buttonActions").hide();
+		$("#codice").focus();
 	}	
 
 	function refreshButtons(){
@@ -141,21 +142,26 @@ $(document).ready(function(){
 		})
 	}
 	
-	$( document ).keydown(function(event) {
-		if(event.keyCode == 13){
-			event.preventDefault();
-		}
+	$( document ).keydown(function(e) {
+		var c = e.which || e.keyCode;//Get key code
+	    switch (c) {
+		   case 74://Block Ctrl+J
+			   e.preventDefault();     
+	           e.stopPropagation();
+	           $("#codice").val("").focus();
+		       break;
+	    }
 	});
 	
 	$("#codice").keydown(function(e){
 		var c = e.which || e.keyCode;//Get key code
 	    switch (c) {
 		   case 74://Block Ctrl+J
-		      	$(this).val("");
-		        e.preventDefault();     
-	            e.stopPropagation();
-	            return;
-	        	break;
+			   e.preventDefault();     
+	           e.stopPropagation();
+	           $(this).val("");
+		       return;
+		       break;
 	       case 13:
 
 		    e.preventDefault();

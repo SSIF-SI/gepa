@@ -25,6 +25,6 @@ $(document).ready(function(){
 			    }
 			},
 			"lengthMenu": [ 25, 50, 75, 100 ],
-			"order": [[ 4, 'desc' ], [ 3, 'asc' ]]
+			"order": [[ 0, 'desc' ]]
 		});
 });
