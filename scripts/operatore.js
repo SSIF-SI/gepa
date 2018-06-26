@@ -42,9 +42,40 @@ $(document).ready(function(){
 				        })
 				        .open();
 			        } else {
-			            $("#result").html("<em>"+data.nome+" "+data.cognome+"</em></strong>&nbsp;&nbsp;<button class='confirm btn btn-success'><i class='fa fa-check'> </i> Ok</button> <button class='cancel btn btn-danger'><i class='fa fa-times'> </i> Annulla</button><input type='hidden' id='operatore' value='"+data.idPersona+"'/>");
-						$("#numBadge").focus();
-						refreshButtons();
+			        	var operatore = data.idPersona;
+			        	$.ajax({
+					           type: "POST",
+					           url: "?action=setUser",
+					           data: {operatore: operatore}, // serializes the form's elements.
+							   dataType: "json",
+					           success: function(data)
+					           {
+					        	   if(!data.errors){
+					        		   $("#s_operatore").html("Operatore: <strong><em>"+data.otherData.user+"</em></strong> <a href='?logout' class='btn btn-danger'>Log Out</a>");
+						                  $("#"+buttonClicked).click();
+						        	} else {
+					            	   new BootstrapDialog()
+									 	.setTitle('<i class="fa fa-exclamation-triangle"> </i> Attenzione')
+							            .setMessage("Errore di connessione")
+							            .setType(BootstrapDialog.TYPE_DANGER)
+							            .onHide(function(){
+							    			$("#numBadge").focus();
+							            
+							            })
+							            .open();
+					               }
+					           },		          
+					           error: function(){ 
+					        	   new BootstrapDialog()
+								 	.setTitle('<i class="fa fa-exclamation-triangle"> </i> Attenzione')
+						            .setMessage("Errore di connessione")
+						            .setType(BootstrapDialog.TYPE_DANGER)
+						            .onHide(function(){
+							    			$("#numBadge").focus();
+							        })
+							        .open();
+						       }
+					         });
 		            }
 	           },
 	           error: function(){ 

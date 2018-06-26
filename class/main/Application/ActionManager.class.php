@@ -98,6 +98,7 @@ class ActionManager {
 		$user = Personale::getInstance()->getEmail($_POST['operatore']);
 		Session::getInstance()->set(AUTH_USER, $user);
 		Session::getInstance()->set(AUTH_USER, $user);
+		$this->_eh->setOtherData("user", Personale::getInstance()->getNominativo($_POST['operatore']));
 		$this->_ARP->encode($this->_eh->getErrors(true));
 	}
 	
