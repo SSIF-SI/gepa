@@ -154,7 +154,8 @@ $(document).ready(function(){
 					 	.setTitle('<i class="fa fa-exclamation-triangle"> </i> Errore durante il salvataggio')
 			            .setMessage(data.errors)
 			            .setType(BootstrapDialog.TYPE_DANGER)
-			            .open();					
+			            .open();	
+		        	   $("#save").removeAttr("disabled");
 	               }
 	           }
 	         });
