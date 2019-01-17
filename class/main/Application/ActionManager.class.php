@@ -6,6 +6,17 @@ class ActionManager {
 		
 	const ACTION_LABEL = "action";
 	
+	private static $VALID_USERS = array(
+		756, 	/* Ribolini */
+		10265, 	/* Verri */
+		10277, 	/* Lipari */
+		10372,	/* Fantini */
+		10506, 	/* Coco */
+		10819, 	/* Lombardi */
+		11027, 	/* Volpini */ 
+		15012 	/* Trentanni */
+	);
+	
 	public function __construct($dbConnector){
 		$this->_dbConnector = $dbConnector;
 		$this->_ARP = new AjaxResultParser();
@@ -91,6 +102,13 @@ class ActionManager {
 		$list = Personale::getInstance()->getPersone();
 		$persona = Utils::filterList($list, Personale::NUM_BADGE, $numBadge);
 		if(is_array($persona)) $persona = reset($persona);
+		if(!Session::getInstance()->exists(AUTH_USER)){
+			/* Controllo operatore */
+			if(isset($persona[Personale::NUM_BADGE]) && !in_array($_POST[Personale::NUM_BADGE], self::$VALID_USERS)){
+				$this->_ARP->encode(array("pruut" => true));
+				return;		 
+			}
+		}
 		$this->_ARP->encode($persona);
 	}
 	

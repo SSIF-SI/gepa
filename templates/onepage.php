@@ -86,6 +86,7 @@
 <section id="main">
 <?php if(isset($view)) include($view);?>
 </section>
+<div id="laugh"></div>
 <script>var BUSINESS_HTTP_PATH = "<?=BUSINESS_HTTP_PATH ?>";</script>
 <script src="<?=SCRIPTS_PATH?>index.js"></script>
 </body>

@@ -1,4 +1,7 @@
 $(document).ready(function(){
+
+	$("#totPacchi").html($(".pacco").length);
+	
 	var Const = {
 		waitingForBadge: false	
 	};
@@ -62,7 +65,7 @@ $(document).ready(function(){
 				            .onHide(function(dialogRef){
 				            	$("#pacchiInUscita").click();
 	            			})
-	            			.open();	
+	            			.open();
 		               } else {
 		            	   new BootstrapDialog()
 						 	.setTitle('<i class="fa fa-exclamation-triangle"> </i> Errore durante il salvataggio')

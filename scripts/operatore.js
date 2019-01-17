@@ -32,6 +32,10 @@ $(document).ready(function(){
 			   dataType: "json",
 	           success: function(data)
 	           {
+	           		if(data.pruut != undefined){
+	           			pruut();
+	           			return;
+	           		}
 		            if(data.nome == undefined || data.cognome == undefined || data.idPersona == undefined){
 		            	new BootstrapDialog()
 					 	.setTitle('<i class="fa fa-exclamation-triangle"> </i> "Attenzione')
@@ -41,6 +45,7 @@ $(document).ready(function(){
 				    		$("#numBadge").focus();
 				        })
 				        .open();
+				        $("#bspinner").css('visibility', 'hidden');
 			        } else {
 			        	var operatore = data.idPersona;
 			        	$.ajax({
@@ -63,7 +68,8 @@ $(document).ready(function(){
 							            
 							            })
 							            .open();
-					               }
+						                $("#bspinner").css('visibility', 'hidden');
+			                      }
 					           },		          
 					           error: function(){ 
 					        	   new BootstrapDialog()
@@ -74,6 +80,8 @@ $(document).ready(function(){
 							    			$("#numBadge").focus();
 							        })
 							        .open();
+							        $("#bspinner").css('visibility', 'hidden');
+			                      
 						       }
 					         });
 		            }
@@ -87,6 +95,8 @@ $(document).ready(function(){
 				    			$("#numBadge").focus();
 		            })
 		            .open();
+		            $("#bspinner").css('visibility', 'hidden');
+			                      
 		       }
 	         });
 		
@@ -97,6 +107,11 @@ $(document).ready(function(){
 		
 	});
 
+	function pruut(){
+		$("#bspinner").css('visibility', 'hidden');
+		$("#laugh").fadeIn();
+		setTimeout(function(){$("#laugh").hide();},3000);
+	}
 	function refreshButtons(){
 
 		$(".cancel,.confirm").unbind();

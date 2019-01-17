@@ -5,6 +5,7 @@ html,body{
 	font-size:85%;
 }
 
+
 * {
 box-sizing: border-box;
 }
@@ -227,4 +228,17 @@ background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #00b5e5), 
 
 input[type="text"]:disabled {
     background: #dddddd; !important
+}
+
+#laugh{
+	position:fixed;
+	display:none;
+	width:220px;
+	height:164px;
+	top:50%;
+	left:50%;
+	margin-left:-40px;
+	margin-top: -62px;
+	background-image: url(images/laugh.gif);
+	
 }
