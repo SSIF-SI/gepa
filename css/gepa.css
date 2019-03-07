@@ -177,6 +177,14 @@ background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #00b5e5), 
     background-position:center 40%;
 }
 
+.type1.front.classifica,
+.type1.back.classifica
+{
+	background-image: url('images/Crown.png');
+	background-repeat:no-repeat;
+    background-position:center 40%;
+}
+
 .active{
 	background-color:gold !important;
 	border-color:#800 !important;

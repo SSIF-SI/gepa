@@ -67,7 +67,7 @@
 			</a>
 		</li>
 		<li>
-			<a id="corrieri" href="#corrieri" title="Registro">
+			<a id="corrieri" href="#corrieri" title="Corrieri">
 				<div class="f1_container">
 					<div class="f1_card">
 					  <div class="front face">
@@ -75,6 +75,20 @@
 					  </div>
 					  <div class="back face center">
 							<div class="corrieri circleBase type1 back"></div>
+					  </div>
+					</div>
+				</div>
+			</a>
+		</li>
+		<li>
+			<a id="classifica" href="#classifica" title="Classifica">
+				<div class="f1_container">
+					<div class="f1_card">
+					  <div class="front face">
+							<div class="classifica circleBase type1 front"></div>
+					  </div>
+					  <div class="back face center">
+							<div class="classifica circleBase type1 back"></div>
 					  </div>
 					</div>
 				</div>
