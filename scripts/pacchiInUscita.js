@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	$("#totPacchi").html($(".pacco").length);
+	refreshCountPacchi();
 	
 	var Const = {
 		waitingForBadge: false	
@@ -87,8 +87,9 @@ $(document).ready(function(){
 	});
 
 	function refreshCountPacchi(){
-		var pacchiDaConsegnare = $("li.selected").length;
+		var pacchiDaConsegnare = $("#pus li.selected").length;
 		$("#countPacchi").html(pacchiDaConsegnare);
+		$("#totPacchi").html($("#pus li").length);
 		pacchiDaConsegnare > 0 ? $("#buttonActions").show() : $("#buttonActions").hide();
 		$("#codice").focus();
 	}	

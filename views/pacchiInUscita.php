@@ -98,7 +98,7 @@ section{box-sizing: border-box;}
 </head>
 <body>
 <h1>Pacchi in Uscita</h1>
-<h2>Pacchi selezionati: <span id="countPacchi">0</span></h2>
+<h2>Pacchi selezionati: <span id="countPacchi">0</span>/<span id="totPacchi">0</span></h2>
 <div id="actions">
 Azioni: 
 <span id="buttonActions">
@@ -112,7 +112,7 @@ Azioni:
 <section class="col-sm-4 col-lg-2 col-xl-1">
 	<div class="destinatario" id="<?=$idDestinatario?>">
 		<h1><?=Personale::getInstance()->getNominativo($idDestinatario)?></h1>
-		<ul>
+		<ul id="pus">
 		<?php foreach ($pacchi as $pacco):?>
 			<li id="<?=preg_replace('/[^a-z0-9]/i', "", $pacco[Registro::CODICE]);?>">
 				<input name="id[]" value="<?=$pacco[Registro::ID_PACCO]?>" type="hidden">
