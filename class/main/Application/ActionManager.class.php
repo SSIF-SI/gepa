@@ -14,7 +14,8 @@ class ActionManager {
 		10506, 	/* Coco */
 		10819, 	/* Lombardi */
 		11027, 	/* Volpini */ 
-		15012 	/* Trentanni */
+		15012, 	/* Trentanni */
+	    10226  /* Pavoni */
 	);
 	
 	public function __construct($dbConnector){
